@@ -1,15 +1,18 @@
-
 from PIL import Image
-import os
+import tkinter as tk
+from tkinter import filedialog
 
-# 이미지들이 저장되어 있는 디렉토리
-path = 'assignment_img/'
+root =tk.Tk()
+root.withdraw()
 
-# 처리할 이미지 확장자 목록
-valid_extensions = ('.png', '.jpg', '.jpeg')  # 필요에 따라 확장자 추가합니다
+img_files = filedialog.askopenfilenames(
+    title="Select image files",
+    filetypes=[("Image Files","*.png;*.jpg;*jpeg")],
+)
 
-# path 디렉토리에 있는 이미지 파일 리스트 받아옵니다 (이미지 확장자만 필터링)
-img_files = [os.path.join(path, img) for img in os.listdir(path) if img.lower().endswith(valid_extensions)]
+if not img_files:
+    print("File is not selected!")
+    exit()
 
 # 이미지를 읽어들임 (모두 RGB 모드로 변환)
 image_list = [Image.open(img).convert('RGB') for img in img_files]
